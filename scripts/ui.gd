@@ -1,22 +1,39 @@
 extends CanvasLayer
-
 @onready var health_bar: ProgressBar = $MarginContainer/VBoxContainer/HealthBar
-@onready var fire_power_bar: ProgressBar = $MarginContainer/VBoxContainer/FirePowerBar
+@onready var weapon_power_bar: ProgressBar = $MarginContainer/VBoxContainer/WeaponPowerBar
+@onready var weapon_label: Label = $MarginContainer/VBoxContainer/WeaponLabel
+@onready var stage_label: Label = $MarginContainer/TopCenterContainer/StageLabel
+
+@export var health_style: StyleBoxFlat
+@export var fire_style: StyleBoxFlat
+@export var poison_style: StyleBoxFlat
 
 func _ready() -> void:
-    # Set custom styles if needed, or rely on Godot defaults
-    var health_style = StyleBoxFlat.new()
-    health_style.bg_color = Color(0.8, 0.1, 0.1)
-    health_bar.add_theme_stylebox_override("fill", health_style)
-    
-    var fire_style = StyleBoxFlat.new()
-    fire_style.bg_color = Color(0.9, 0.5, 0.1)
-    fire_power_bar.add_theme_stylebox_override("fill", fire_style)
+	if health_style:
+		health_bar.add_theme_stylebox_override("fill", health_style)
+	if fire_style == null:
+		fire_style = StyleBoxFlat.new()
+		fire_style.bg_color = Color(0.9, 0.5, 0.1)
+	if poison_style == null:
+		poison_style = StyleBoxFlat.new()
+		poison_style.bg_color = Color(0.6, 0.1, 0.9)
 
 func update_health(current: float, maximum: float) -> void:
-    health_bar.max_value = maximum
-    health_bar.value = current
+	health_bar.max_value = maximum
+	health_bar.value = current
 
-func update_fire_power(current: float, maximum: float) -> void:
-    fire_power_bar.max_value = maximum
-    fire_power_bar.value = current
+func update_stage(current_stage: int) -> void:
+	if stage_label:
+		stage_label.text = "Stage %d / 5" % current_stage
+
+func update_active_weapon(weapon: Weapon) -> void:
+	if not weapon:
+		return
+	weapon_power_bar.max_value = weapon.max_power
+	weapon_power_bar.value = weapon.current_power
+	weapon_label.text = "Weapon: " + weapon.weapon_name + " [1/2 to switch]"
+	
+	if weapon.weapon_name == "Fire":
+		weapon_power_bar.add_theme_stylebox_override("fill", fire_style)
+	else:
+		weapon_power_bar.add_theme_stylebox_override("fill", poison_style)

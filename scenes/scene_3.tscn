@@ -1,22 +1,22 @@
-[gd_scene load_steps=17 format=3 uid="uid://dywgk0iyct5bf"]
+[gd_scene load_steps=17 format=3 uid="uid://ckkwmrnsjoj8m"]
 
 [ext_resource type="PackedScene" uid="uid://cxa3sqvykgcp8" path="res://scenes/player.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://cr26fcvrgl474" path="res://scenes/enemy_scary.tscn" id="9_087sr"]
 [ext_resource type="PackedScene" uid="uid://bjoupmauh0vu0" path="res://assets/city/building-m.fbx" id="13_luhhm"]
 [ext_resource type="PackedScene" uid="uid://c0uflme5uf6uy" path="res://assets/city/building-skyscraper-a.fbx" id="15_rup4s"]
 [ext_resource type="PackedScene" uid="uid://0ydhrdwxauqu" path="res://assets/city/building-skyscraper-b.fbx" id="16_4kbfs"]
 [ext_resource type="PackedScene" uid="uid://dptbulva6v26d" path="res://assets/city/building-skyscraper-c.fbx" id="17_f17e3"]
 [ext_resource type="PackedScene" uid="uid://1043x3b7x6j7" path="res://assets/city/building-skyscraper-d.fbx" id="18_x2olw"]
 [ext_resource type="PackedScene" uid="uid://c1w41j8mmyt8o" path="res://assets/city/building-skyscraper-e.fbx" id="19_817gm"]
-[ext_resource type="PackedScene" uid="uid://dp3bwur0di436" path="res://scenes/enemy.tscn" id="20_enemy"]
 [ext_resource type="Script" uid="uid://q1j85bhwosiy" path="res://scripts/level.gd" id="21_level"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_world"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i7141"]
-sky_top_color = Color(0, 0.51527107, 0.5136604, 1)
-sky_horizon_color = Color(0.7482175, 0.91267157, 1.016925, 1)
-ground_bottom_color = Color(0.2691307, 0.41167578, 0.83030015, 1)
-ground_horizon_color = Color(0.7482175, 0.91267157, 1.016925, 1)
+sky_top_color = Color(3.7902967e-07, 0.14983979, 0.14983982, 1)
+sky_horizon_color = Color(0, 0.5045223, 0.70944625, 1)
+ground_bottom_color = Color(0.47410405, 0.10966829, 0.1822182, 1)
+ground_horizon_color = Color(0, 0.5087568, 0.7152317, 1)
 energy_multiplier = 0.6
 
 [sub_resource type="Sky" id="Sky_4mrxx"]
@@ -48,6 +48,7 @@ environment = SubResource("Environment_7r4gi")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660252, -0.4330129, 0.25000018, 0.43301308, -0.39951903, 0.8080124, -0.25, 0.8080125, 0.5334938, -25, 22, 60)
+visible = false
 shadow_enabled = true
 
 [node name="builds" type="Node3D" parent="."]
@@ -263,25 +264,21 @@ mesher = SubResource("VoxelMesherTransvoxel_i7141")
 gi_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 62)
 
+[node name="VoxelTerrain2" type="VoxelTerrain" parent="."]
+material_override = SubResource("StandardMaterial3D_i7141")
+generator = SubResource("VoxelGeneratorFlat_4mrxx")
+mesher = SubResource("VoxelMesherTransvoxel_i7141")
+gi_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, 62)
+
 [node name="player" parent="." node_paths=PackedStringArray("voxel_terrain") instance=ExtResource("7_i7141")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -7, 5, 62)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 2, 62)
 voxel_terrain = NodePath("../VoxelTerrain")
+max_health = null
 
 [node name="VoxelViewer" type="VoxelViewer" parent="player"]
 enabled_in_editor = true
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.6666665, -1.3333359)
-
-[node name="Enemy" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 5, 62)
-
-[node name="Enemy2" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 69)
-
-[node name="Enemy3" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 52)
-
-[node name="Enemy4" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 62)
 
 [node name="inv_walls" type="Node3D" parent="."]
 visible = false
@@ -301,3 +298,15 @@ use_collision = true
 [node name="CSGBox3D2" type="CSGBox3D" parent="inv_walls"]
 transform = Transform3D(42.257248, 0, 0, 0, 38.96511, 0, 0, 0, 1, -10, 7, 88)
 use_collision = true
+
+[node name="enemies" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.697503, 0)
+
+[node name="Enemy" parent="enemies" instance=ExtResource("9_087sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 47)
+
+[node name="Enemy2" parent="enemies" instance=ExtResource("9_087sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 47)
+
+[node name="Enemy3" parent="enemies" instance=ExtResource("9_087sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 78)

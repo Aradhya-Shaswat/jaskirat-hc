@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dp3bwur0di436"]
+[gd_scene load_steps=11 format=3 uid="uid://cr26fcvrgl474"]
 
-[ext_resource type="Script" uid="uid://dheg1tyivbbk8" path="res://scripts/enemy.gd" id="1_enemy_script"]
-[ext_resource type="Texture2D" uid="uid://c0qr1a8acryqc" path="res://p-assets/bhaveshSCARY.png" id="Image_Scary"]
+[ext_resource type="Script" uid="uid://dheg1tyivbbk8" path="res://scripts/enemy.gd" id="1_sixev"]
+[ext_resource type="Texture2D" path="res://p-assets/scary_med.png" id="2_l4aeo"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_enemy"]
 top_radius = 0.6
@@ -47,7 +47,7 @@ viewport_path = NodePath("HealthBarViewport")
 [node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_enemy_script")
+script = ExtResource("1_sixev")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.25, 0)
@@ -84,7 +84,7 @@ show_percentage = false
 [node name="ScaryImage" type="Sprite3D" parent="."]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 2.5171678, 0)
 billboard = 2
-texture = ExtResource("Image_Scary")
+texture = ExtResource("2_l4aeo")
 
 [node name="HealthBar3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.601129, 0)

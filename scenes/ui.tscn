@@ -1,9 +1,81 @@
-[gd_scene load_steps=3 format=3 uid="uid://ui_scene_uid"]
+[gd_scene load_steps=8 format=3 uid="uid://dylku641p0m46"]
 
-[ext_resource type="Script" uid="uid://ui_script_uid" path="res://scripts/ui.gd" id="1_ui_script"]
+[ext_resource type="Script" uid="uid://dfhma718xlyyn" path="res://scripts/ui.gd" id="1_ui_script"]
+[ext_resource type="FontFile" uid="uid://dlqog04epd2cu" path="res://assets/Poppins-Regular.ttf" id="2_yev5y"]
+[ext_resource type="FontFile" uid="uid://cc7j3842jav1u" path="res://assets/dreamplanner.otf" id="3_gdt2y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yev5y"]
+bg_color = Color(0, 0.30748522, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.22505373, 0.61339134, 0.6409314, 0.6)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdt2y"]
+bg_color = Color(0.5112746, 0.45123953, 0.162148, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.22505373, 0.61339134, 0.6409314, 0.6)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dubc"]
+bg_color = Color(0.52017105, 0.27811724, 0.75424004, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.22505373, 0.61339134, 0.6409314, 0.6)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm3ai"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.22505373, 0.61339134, 0.6409314, 0.6)
+shadow_offset = Vector2(0, 3)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ui_script")
+health_style = SubResource("StyleBoxFlat_yev5y")
+fire_style = SubResource("StyleBoxFlat_gdt2y")
+poison_style = SubResource("StyleBoxFlat_8dubc")
+
+[node name="Crosshair" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.8)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -25,10 +97,31 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(300, 20)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_yev5y")
+theme_override_styles/background = SubResource("StyleBoxFlat_wm3ai")
 value = 100.0
 
-[node name="FirePowerBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+[node name="WeaponLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_yev5y")
+text = "Weapon: Fire [1/2 to switch]"
+
+[node name="WeaponPowerBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 20)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_yev5y")
+theme_override_styles/background = SubResource("StyleBoxFlat_wm3ai")
 value = 100.0
+
+[node name="TopCenterContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="StageLabel" type="Label" parent="MarginContainer/TopCenterContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_gdt2y")
+theme_override_font_sizes/font_size = 32
+text = "Stage 1 / 5"
+horizontal_alignment = 1

@@ -155,3 +155,16 @@ texture = ExtResource("4_sm2ni")
 position = Vector2(881.99994, 355.00003)
 scale = Vector2(0.37949994, 0.39419648)
 texture = ExtResource("5_73fcp")
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 252.0
+offset_right = 264.0
+offset_bottom = 276.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pn7wg")
+theme_override_font_sizes/font_size = 24
+text = "HACK CLUB CAMPFIRE."
+horizontal_alignment = 1
+vertical_alignment = 1

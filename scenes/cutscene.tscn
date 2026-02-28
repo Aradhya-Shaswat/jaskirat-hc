@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://oojgv3rx503x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l8ll4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_edmg7"]
+sky_material = SubResource("ProceduralSkyMaterial_l8ll4")
+
+[sub_resource type="Environment" id="Environment_a320b"]
+background_mode = 2
+sky = SubResource("Sky_edmg7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ll4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l8ll4"]
+material = SubResource("StandardMaterial3D_l8ll4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edmg7"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a320b"]
+material = SubResource("StandardMaterial3D_edmg7")
+
+[sub_resource type="Animation" id="Animation_l8ll4"]
+resource_name = "scene"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.02),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(13, 5, -20.522003), Vector3(13, 5, -20.522003)]
+}
+
+[sub_resource type="Animation" id="Animation_edmg7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(13, 5, -20.522003)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a320b"]
+_data = {
+&"RESET": SubResource("Animation_edmg7"),
+&"scene": SubResource("Animation_l8ll4")
+}
+
+[node name="root" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a320b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, 0, 0)
+mesh = SubResource("BoxMesh_l8ll4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 3, 0)
+mesh = SubResource("BoxMesh_a320b")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.86602545, 0, 0.4999999, 0, 1, 0, -0.4999999, 0, -0.86602545, 13, 5, -20.522003)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_a320b")
+}

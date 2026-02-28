@@ -27,18 +27,9 @@ var current_health: float
 
 var spawn_position: Vector3
 
-# Fire Power Mechanics
-@export var max_fire_power: float = 100.0
-var current_fire_power: float
-var fire_depletion_rate: float = 25.0 # Depletes 100 in 4 seconds
-var fire_regen_rate: float = 100.0 / 15.0 # Regens exactly 100 over 15 seconds
-# Fire Weapon Mechanics
-var fire_particles: GPUParticles3D
-var fire_area: Area3D
-var fire_collision: CollisionShape3D
-
-const FIRE_DAMAGE := 20.0 # Damage per second
-const FIRE_RANGE := 10.0
+# Weapons
+var weapons: Array[Weapon] = []
+var active_weapon_index = 0
 
 var standing_height: float
 var crouching_height: float
@@ -49,37 +40,52 @@ func _ready() -> void:
 	
 	spawn_position = global_position
 	current_health = max_health
-	current_fire_power = max_fire_power
+	
+	_setup_weapons()
+	
+	if SceneManager and SceneManager.current_level > 1:
+		current_health = SceneManager.player_health
+		for i in range(weapons.size()):
+			weapons[i].current_power = SceneManager.weapon_powers[i]
 	
 	# Initial UI update
 	if ui:
 		ui.update_health(current_health, max_health)
-		ui.update_fire_power(current_fire_power, max_fire_power)
-	
-	_setup_fire_mechanics()
+		ui.update_active_weapon(weapons[active_weapon_index])
+		if SceneManager:
+			ui.update_stage(SceneManager.current_level)
 
-func _setup_fire_mechanics() -> void:
-	# 1. Setup Area3D for collision detection
-	fire_area = Area3D.new()
-	fire_area.collision_layer = 0 # Doesn't need to be on a layer, just scans
-	fire_area.collision_mask = 2 # Assuming enemies are on layer 2
-	camera.add_child(fire_area)
-	
-	# Create a capsule or box shape for the fire hit area
-	fire_collision = CollisionShape3D.new()
-	var shape = BoxShape3D.new()
-	shape.size = Vector3(1.5, 1.5, FIRE_RANGE)
-	fire_collision.shape = shape
-	fire_collision.position = Vector3(0, 0, -FIRE_RANGE / 2.0)
-	fire_area.add_child(fire_collision)
-	
-	# 2. Setup Particles
-	var fire_scene = load("res://scenes/particles/fire.tscn")
-	if fire_scene:
-		fire_particles = fire_scene.instantiate()
-		camera.add_child(fire_particles)
-		fire_particles.position = Vector3(0, -0.5, -1.0) # slightly below and in front of camera
-		fire_particles.emitting = false
+func _setup_weapons() -> void:
+	if not InputMap.has_action("slot_1"):
+		InputMap.add_action("slot_1")
+		var key1 = InputEventKey.new()
+		key1.keycode = KEY_1
+		InputMap.action_add_event("slot_1", key1)
+	if not InputMap.has_action("slot_2"):
+		InputMap.add_action("slot_2")
+		var key2 = InputEventKey.new()
+		key2.keycode = KEY_2
+		InputMap.action_add_event("slot_2", key2)
+
+	if not InputMap.has_action("weapon_next"):
+		InputMap.add_action("weapon_next")
+		var m_up = InputEventMouseButton.new()
+		m_up.button_index = MOUSE_BUTTON_WHEEL_UP
+		InputMap.action_add_event("weapon_next", m_up)
+		
+	if not InputMap.has_action("weapon_prev"):
+		InputMap.add_action("weapon_prev")
+		var m_down = InputEventMouseButton.new()
+		m_down.button_index = MOUSE_BUTTON_WHEEL_DOWN
+		InputMap.action_add_event("weapon_prev", m_down)
+
+	# Add FireWeapon and PoisonWeapon
+	var fire_wep = FireWeapon.new()
+	var poison_wep = PoisonWeapon.new()
+	camera.add_child(fire_wep)
+	camera.add_child(poison_wep)
+	weapons.append(fire_wep)
+	weapons.append(poison_wep)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -101,28 +107,30 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.y = JUMP_VELOCITY
 			
-	var wants_to_fire = Input.is_action_pressed('dig')
-	
-	if wants_to_fire and current_fire_power > 0:
-		if not is_firing:
-			_start_firing()
+	# Switch Weapons
+	if Input.is_action_just_pressed("slot_1") and weapons.size() > 0:
+		_switch_weapon(0)
+	elif Input.is_action_just_pressed("slot_2") and weapons.size() > 1:
+		_switch_weapon(1)
+	elif Input.is_action_just_pressed("weapon_next") and weapons.size() > 1:
+		var next_idx = (active_weapon_index + 1) % weapons.size()
+		_switch_weapon(next_idx)
+	elif Input.is_action_just_pressed("weapon_prev") and weapons.size() > 1:
+		var prev_idx = (active_weapon_index - 1 + weapons.size()) % weapons.size()
+		_switch_weapon(prev_idx)
+		
+	# Process active weapon regeneration or firing
+	for i in range(weapons.size()):
+		var wep = weapons[i]
+		if i == active_weapon_index and Input.is_action_pressed('dig'):
+			wep.fire(delta)
+		else:
+			wep.stop_fire()
+			wep.regenerate_power(delta)
 			
-		# Deplete Fire Power
-		current_fire_power -= fire_depletion_rate * delta
-		if current_fire_power <= 0:
-			current_fire_power = 0
-			_stop_firing()
-	else:
-		if is_firing:
-			_stop_firing()
-			
-		# Regenerate if not firing (no cooldown block)
-		if current_fire_power < max_fire_power:
-			current_fire_power += fire_regen_rate * delta
-			current_fire_power = min(current_fire_power, max_fire_power)
-
 	if ui:
-		ui.update_fire_power(current_fire_power, max_fire_power)
+		var active_wep = weapons[active_weapon_index]
+		ui.update_active_weapon(active_wep)
 
 	# Movement speed based on state
 	var current_speed := SPEED
@@ -142,8 +150,6 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 
 	move_and_slide()
-	
-	_apply_fire_damage(delta)
 
 func _set_crouch(crouching: bool) -> void:
 	is_crouching = crouching
@@ -161,25 +167,12 @@ func _can_stand_up() -> bool:
 	var result := space_state.intersect_ray(query)
 	return result.is_empty()
 
-func _start_firing() -> void:
-	is_firing = true
-	if fire_particles:
-		fire_particles.emitting = true
-
-func _stop_firing() -> void:
-	is_firing = false
-	if fire_particles:
-		fire_particles.emitting = false
-
-func _apply_fire_damage(delta: float) -> void:
-	if not is_firing or not is_instance_valid(fire_area):
-		return
-		
-	var overlapping_bodies = fire_area.get_overlapping_bodies()
-	for body in overlapping_bodies:
-		if body.has_method("take_damage"):
-			# Apply damage over time
-			body.take_damage(FIRE_DAMAGE * delta)
+func _switch_weapon(index: int) -> void:
+	if active_weapon_index != index:
+		weapons[active_weapon_index].stop_fire()
+		active_weapon_index = index
+		if ui:
+			ui.update_active_weapon(weapons[active_weapon_index])
 
 func take_damage(amount: float) -> void:
 	current_health -= amount
@@ -195,9 +188,10 @@ func die() -> void:
 	# Respawn logic
 	global_position = spawn_position
 	current_health = max_health
-	current_fire_power = max_fire_power
-	_stop_firing()
+	for wep in weapons:
+		wep.current_power = wep.max_power
+		wep.stop_fire()
 	
 	if ui:
 		ui.update_health(current_health, max_health)
-		ui.update_fire_power(current_fire_power, max_fire_power)
+		ui.update_active_weapon(weapons[active_weapon_index])
