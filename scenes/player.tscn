@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxa3sqvykgcp8"]
+
+[ext_resource type="Script" uid="uid://bjwy33mk6blqi" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://kubo7i7do525" path="res://scripts/fp_head.gd" id="2_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://ui_scene_uid" path="res://scenes/ui.tscn" id="3_ui"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
+
+[node name="player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_g2els")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_u8vuu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_u8vuu")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_qhqgy")
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+current = true
+
+[node name="DigMarker" type="Marker3D" parent="head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.7438365)
+
+[node name="UI" parent="." instance=ExtResource("3_ui")]
