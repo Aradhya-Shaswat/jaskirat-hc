@@ -29,15 +29,20 @@ tonemap_mode = 2
 sdfgi_enabled = true
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7141"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5uwh"]
 albedo_color = Color(1.3669133e-05, 0.57219636, 0.8464513, 1)
 metallic = 1.0
 roughness = 0.5
 uv2_triplanar = true
 
-[sub_resource type="VoxelGeneratorFlat" id="VoxelGeneratorFlat_4mrxx"]
+[sub_resource type="BoxMesh" id="BoxMesh_xpygp"]
+material = SubResource("StandardMaterial3D_b5uwh")
 
-[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_i7141"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpygp"]
+albedo_color = Color(0.5929181, 0.12230108, 0.16813523, 1)
+metallic = 1.0
+roughness = 0.5
+uv2_triplanar = true
 
 [node name="world" type="NavigationRegion3D"]
 navigation_mesh = SubResource("NavigationMesh_world")
@@ -91,10 +96,10 @@ transform = Transform3D(4.7724004, -1.4913728, 5.5988784e-07, 1.491373, 4.7724, 
 transform = Transform3D(4.7724004, -1.4913728, 5.5988784e-07, 1.491373, 4.7724, 8.544495e-08, -5.598878e-07, 8.544521e-08, 5.000001, 30.838116, 0.040901184, 112.235794)
 
 [node name="building-m3" parent="builds" instance=ExtResource("13_luhhm")]
-transform = Transform3D(4.921148, 0.8844789, -3.3204907e-07, -0.8844789, 4.921148, 2.9602504e-08, 3.3204904e-07, 2.9602575e-08, 5.0000005, -2.9911923, 0.10829353, 91.86759)
+transform = Transform3D(4.921148, 0.8844789, -3.3204907e-07, -0.8844789, 4.921148, 2.9602504e-08, 3.3204904e-07, 2.9602688e-08, 5.000001, -2.9911923, 0.10829258, 96.99642)
 
 [node name="building-skyscraper-a3" parent="builds" instance=ExtResource("15_rup4s")]
-transform = Transform3D(5, 0, 0, 0, 4.5772953, -2.012056, 0, 2.012056, 4.5772953, -30.84676, -0.6393814, 83.79243)
+transform = Transform3D(5, 0, 0, 0, 4.5772953, -2.012056, 0, 2.012056, 4.5772953, -32.760403, -0.6393814, 83.792435)
 
 [node name="building-skyscraper-b3" parent="builds" instance=ExtResource("16_4kbfs")]
 transform = Transform3D(4.921148, 0.8844789, -3.3204907e-07, -0.8844789, 4.921148, 2.9602504e-08, 3.3204904e-07, 2.9602575e-08, 5.0000005, -26.133202, 1.0988503, 96.96242)
@@ -142,7 +147,7 @@ transform = Transform3D(-2.1855698e-07, -1.2748684e-14, 5.0000005, 0.21582998, 4
 transform = Transform3D(0.03817952, 0.88365453, 4.921148, 0.21242623, 4.9165606, -0.88447887, -4.995342, 0.21583013, 1.13695734e-07, 8.742443, -0.3475399, 47.79351)
 
 [node name="building-skyscraper-a6" parent="builds" instance=ExtResource("15_rup4s")]
-transform = Transform3D(0.20452572, 0.860507, 4.9211483, 1.137959, 4.787771, -0.8844789, -4.8644876, 1.1561929, 1.1941562e-07, 6.7171607, -1.5172424, 73.500656)
+transform = Transform3D(0.20452572, 0.860507, 4.9211483, 1.137959, 4.787771, -0.8844789, -4.864488, 1.1561929, 1.1941559e-07, 14.295256, -1.5172424, 73.500656)
 
 [node name="building-skyscraper-b6" parent="builds" instance=ExtResource("16_4kbfs")]
 transform = Transform3D(0.20452572, 0.860507, 4.9211483, 1.137959, 4.787771, -0.8844789, -4.8644876, 1.1561929, 1.1941562e-07, 13.212586, -1.2834549, 64.6013)
@@ -258,28 +263,8 @@ transform = Transform3D(6.556709e-07, 0, -5, 0, 5, 0, 5, 0, 6.556709e-07, -38.23
 [node name="building-skyscraper-e8" parent="builds" instance=ExtResource("19_817gm")]
 transform = Transform3D(6.556709e-07, 0, -5, 0, 5, 0, 5, 0, 6.556709e-07, -34.992207, 0, 94.15455)
 
-[node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-material_override = SubResource("StandardMaterial3D_i7141")
-generator = SubResource("VoxelGeneratorFlat_4mrxx")
-mesher = SubResource("VoxelMesherTransvoxel_i7141")
-gi_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 62)
-
-[node name="VoxelTerrain2" type="VoxelTerrain" parent="."]
-material_override = SubResource("StandardMaterial3D_i7141")
-generator = SubResource("VoxelGeneratorFlat_4mrxx")
-mesher = SubResource("VoxelMesherTransvoxel_i7141")
-gi_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36, 62)
-
-[node name="player" parent="." node_paths=PackedStringArray("voxel_terrain") instance=ExtResource("7_i7141")]
-transform = Transform3D(1.4763443, -0.26509637, 0.011453831, 0.2653437, 1.4749684, -0.06372792, 0, 0.06474904, 1.498602, 5.8182135, 6.1664352, 57.582787)
-voxel_terrain = NodePath("../VoxelTerrain")
-max_health = null
-
-[node name="VoxelViewer" type="VoxelViewer" parent="player"]
-enabled_in_editor = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.6666665, -1.3333359)
+[node name="player" parent="." instance=ExtResource("7_i7141")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5000001, 0, 0, 0, 1.5000001, 5.8182135, 6.1664352, 57.582787)
 
 [node name="inv_walls" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10330963, 0, -8.541195)
@@ -310,4 +295,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9452229, 38.72624)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9452229, 76.72624)
 
 [node name="Enemy3" parent="enemies" instance=ExtResource("9_b5uwh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 1.9452229, 76.72624)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.459919, 1.9452229, 69.0313)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, -14.433701, 17, 76)
+mesh = SubResource("BoxMesh_xpygp")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, -14.434, 0, 76)
+use_collision = true
+material = SubResource("StandardMaterial3D_xpygp")

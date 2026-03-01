@@ -1,4 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://oojgv3rx503x"]
+[gd_scene load_steps=17 format=3 uid="uid://oojgv3rx503x"]
+
+[ext_resource type="PackedScene" uid="uid://bevbmns1lki7c" path="res://assets/cage.glb" id="1_edmg7"]
+[ext_resource type="Script" uid="uid://c3lvdxgrvnof3" path="res://scripts/cutscene.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cblk44wc401at" path="res://assets/content.png" id="2_a320b"]
+[ext_resource type="AudioStream" uid="uid://cr5smv4x28wid" path="res://sounds/final.MP3" id="2_audio"]
+[ext_resource type="FontFile" uid="uid://cc7j3842jav1u" path="res://assets/dreamplanner.otf" id="5_fs8wb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l8ll4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -8,37 +14,21 @@ ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 sky_material = SubResource("ProceduralSkyMaterial_l8ll4")
 
 [sub_resource type="Environment" id="Environment_a320b"]
-background_mode = 2
+background_mode = 1
 sky = SubResource("Sky_edmg7")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edmg7"]
+albedo_color = Color(0.78039217, 0.42745098, 0, 1)
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.78039217, 0.42745098, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ll4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_l8ll4"]
 material = SubResource("StandardMaterial3D_l8ll4")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edmg7"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a320b"]
-material = SubResource("StandardMaterial3D_edmg7")
-
-[sub_resource type="Animation" id="Animation_l8ll4"]
-resource_name = "scene"
-length = 20.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.02),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(13, 5, -20.522003), Vector3(13, 5, -20.522003)]
-}
 
 [sub_resource type="Animation" id="Animation_edmg7"]
 length = 0.001
@@ -54,6 +44,118 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(13, 5, -20.522003)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cage:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 44, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.41887903, 3.159046, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Label2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_l8ll4"]
+resource_name = "scene"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.13333336, -0.06666667, 5.0666666, 6.366667, 9.776667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(30.055, -0.225, -28.052), Vector3(-8.436, 20.498, -55.191), Vector3(2.3, 7.94, -15.022), Vector3(2.3, 7.94, -15.022), Vector3(0.47, 12.365, -11.027)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cage:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5.3, 5.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 44, 0), Vector3(0.88, 2.415, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 10.796667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.41887903, 3.159046, 0), Vector3(-0.41887903, 3.159046, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 10.806526, 13.092612),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Label2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 13.092529),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a320b"]
 _data = {
@@ -61,27 +163,81 @@ _data = {
 &"scene": SubResource("Animation_l8ll4")
 }
 
-[node name="root" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a320b"]
+albedo_color = Color(0.19076231, 0.19076234, 0.19076231, 1)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_a320b")
+[sub_resource type="SphereMesh" id="SphereMesh_0sipp"]
+material = SubResource("StandardMaterial3D_a320b")
+
+[node name="root" type="Node3D"]
+script = ExtResource("1_script")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_audio")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a320b")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, 0, 0)
+transform = Transform3D(702.79675, 0, 0, 0, 1, 0, 0, 0, 31756.422, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_edmg7")
 mesh = SubResource("BoxMesh_l8ll4")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 3, 0)
-mesh = SubResource("BoxMesh_a320b")
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.86602545, 0, 0.4999999, 0, 1, 0, -0.4999999, 0, -0.86602545, 13, 5, -20.522003)
+transform = Transform3D(-0.9998477, 0.0070985286, -0.015943555, 0, 0.9135454, 0.40673664, 0.017452395, 0.4066747, -0.9134063, 13, 5, -20.522003)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_a320b")
 }
+
+[node name="cage" parent="." instance=ExtResource("1_edmg7")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 44, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="cage"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 11.197, 83.253, -31.727)
+texture = ExtResource("2_a320b")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(19.45, 0, 0, 0, 6.483, 0, 0, 0, 13.835, 0, 0.27024007, 0)
+mesh = SubResource("SphereMesh_0sipp")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = 201.0
+offset_right = 127.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("5_fs8wb")
+theme_override_font_sizes/font_size = 35
+text = "To be continued...."
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = 201.0
+offset_right = 127.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("5_fs8wb")
+theme_override_font_sizes/font_size = 35
+text = "Thank you for playing."

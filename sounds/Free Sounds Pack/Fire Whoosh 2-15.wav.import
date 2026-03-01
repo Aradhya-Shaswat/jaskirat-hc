@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://biita56htsvrf"
+path="res://.godot/imported/Fire Whoosh 2-15.wav-9e7ff3caa6a33f38bc00e5245dcc5c7c.sample"
+
+[deps]
+
+source_file="res://sounds/Free Sounds Pack/Fire Whoosh 2-15.wav"
+dest_files=["res://.godot/imported/Fire Whoosh 2-15.wav-9e7ff3caa6a33f38bc00e5245dcc5c7c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

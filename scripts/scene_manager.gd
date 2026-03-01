@@ -15,12 +15,12 @@ const LEVELS = [
 func load_next_level() -> void:
 	current_level += 1
 	if current_level > LEVELS.size():
-		get_tree().change_scene_to_file("res://scenes/credits.tscn")
+		get_tree().change_scene_to_file("res://scenes/cutscene.tscn")
 	else:
 		call_deferred("_deferred_load")
 
 func _deferred_load() -> void:
-	# Reset player state for next level to full
+
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		player_health = player.max_health

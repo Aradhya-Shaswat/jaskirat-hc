@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b3b1aifxn4v0p"
+path="res://.godot/imported/Modern4.ogg-52b5bea3e7262f592de2b0bb0ac29d07.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/UI Soundpack/OGG/Modern4.ogg"
+dest_files=["res://.godot/imported/Modern4.ogg-52b5bea3e7262f592de2b0bb0ac29d07.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

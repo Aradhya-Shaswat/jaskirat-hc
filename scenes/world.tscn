@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dywgk0iyct5bf"]
+[gd_scene load_steps=15 format=3 uid="uid://dywgk0iyct5bf"]
 
 [ext_resource type="PackedScene" uid="uid://cxa3sqvykgcp8" path="res://scenes/player.tscn" id="7_i7141"]
 [ext_resource type="PackedScene" uid="uid://bjoupmauh0vu0" path="res://assets/city/building-m.fbx" id="13_luhhm"]
@@ -29,15 +29,11 @@ tonemap_mode = 2
 sdfgi_enabled = true
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7141"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6p8m"]
 albedo_color = Color(1.3669133e-05, 0.57219636, 0.8464513, 1)
 metallic = 1.0
 roughness = 0.5
 uv2_triplanar = true
-
-[sub_resource type="VoxelGeneratorFlat" id="VoxelGeneratorFlat_4mrxx"]
-
-[sub_resource type="VoxelMesherTransvoxel" id="VoxelMesherTransvoxel_i7141"]
 
 [node name="world" type="NavigationRegion3D"]
 navigation_mesh = SubResource("NavigationMesh_world")
@@ -256,32 +252,8 @@ transform = Transform3D(6.556709e-07, 0, -5, 0, 5, 0, 5, 0, 6.556709e-07, -38.23
 [node name="building-skyscraper-e8" parent="builds" instance=ExtResource("19_817gm")]
 transform = Transform3D(6.556709e-07, 0, -5, 0, 5, 0, 5, 0, 6.556709e-07, -34.992207, 0, 94.15455)
 
-[node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-material_override = SubResource("StandardMaterial3D_i7141")
-generator = SubResource("VoxelGeneratorFlat_4mrxx")
-mesher = SubResource("VoxelMesherTransvoxel_i7141")
-gi_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 62)
-
-[node name="player" parent="." node_paths=PackedStringArray("voxel_terrain") instance=ExtResource("7_i7141")]
+[node name="player" parent="." instance=ExtResource("7_i7141")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -7, 5, 62)
-voxel_terrain = NodePath("../VoxelTerrain")
-
-[node name="VoxelViewer" type="VoxelViewer" parent="player"]
-enabled_in_editor = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.6666665, -1.3333359)
-
-[node name="Enemy" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 5, 62)
-
-[node name="Enemy2" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 69)
-
-[node name="Enemy3" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 52)
-
-[node name="Enemy4" parent="." instance=ExtResource("20_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 62)
 
 [node name="inv_walls" type="Node3D" parent="."]
 visible = false
@@ -301,3 +273,22 @@ use_collision = true
 [node name="CSGBox3D2" type="CSGBox3D" parent="inv_walls"]
 transform = Transform3D(42.257248, 0, 0, 0, 38.96511, 0, 0, 0, 1, -10, 7, 88)
 use_collision = true
+
+[node name="enemies" type="Node3D" parent="."]
+
+[node name="Enemy" parent="enemies" instance=ExtResource("20_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 5, 62)
+
+[node name="Enemy2" parent="enemies" instance=ExtResource("20_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 69)
+
+[node name="Enemy3" parent="enemies" instance=ExtResource("20_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 52)
+
+[node name="Enemy4" parent="enemies" instance=ExtResource("20_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 62)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, -14.434, 0, 76)
+use_collision = true
+material = SubResource("StandardMaterial3D_n6p8m")

@@ -18,12 +18,18 @@ var poison_timer: float = 0.0
 @onready var health_bar: ProgressBar = $HealthBarViewport/ProgressBar
 var player: Node3D
 
+var hit_audio: AudioStreamPlayer3D
+
 func _ready() -> void:
 	current_health = max_health
 	player = get_tree().get_first_node_in_group("player")
 	if health_bar:
 		health_bar.max_value = max_health
 		health_bar.value = max_health
+
+	hit_audio = AudioStreamPlayer3D.new()
+	hit_audio.stream = load("res://sounds/Free Sounds Pack/Hit Generic 2-1.wav")
+	add_child(hit_audio)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -45,24 +51,22 @@ func _physics_process(delta: float) -> void:
 		attack_timer -= delta
 
 		if distance_to_player > attack_range:
-			# Calculate direct path to player
+
 			var direction = global_position.direction_to(player.global_position)
 			direction.y = 0
 			direction = direction.normalized()
 
-			# Set velocity directly to ensure immediate responsive movement
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 		else:
-			# Stop moving
+
 			velocity.x = 0
 			velocity.z = 0
 
 			if attack_timer <= 0 and player.has_method("take_damage"):
 				player.take_damage(attack_damage)
 				attack_timer = attack_cooldown
-				
-		# Make the enemy physically rotate to look at the player
+
 		if flat_pos.distance_to(flat_target) > 0.1:
 			var look_target = Vector3(player.global_position.x, global_position.y, player.global_position.z)
 			look_at(look_target, Vector3.UP)
@@ -73,6 +77,10 @@ func take_damage(amount: float) -> void:
 	current_health -= amount
 	if health_bar:
 		health_bar.value = current_health
+	
+	# if hit_audio:
+	# 	hit_audio.play()
+
 	if current_health <= 0:
 		queue_free()
 

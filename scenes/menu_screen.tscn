@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4clhfgggbtf2"]
+[gd_scene load_steps=13 format=3 uid="uid://b4clhfgggbtf2"]
 
 [ext_resource type="Script" uid="uid://e1lb2qeev1oj" path="res://scripts/menu_screen.gd" id="1_e6vgv"]
 [ext_resource type="FontFile" uid="uid://dlqog04epd2cu" path="res://assets/Poppins-Regular.ttf" id="1_yft84"]
 [ext_resource type="FontFile" uid="uid://cc7j3842jav1u" path="res://assets/dreamplanner.otf" id="3_pn7wg"]
 [ext_resource type="Texture2D" uid="uid://ckw0lylnojbwb" path="res://assets/fucknah.png" id="4_sm2ni"]
 [ext_resource type="Texture2D" uid="uid://clm7dkh8kv0xi" path="res://assets/—Pngtree—element float round blue bubble_3917372.png" id="5_73fcp"]
+[ext_resource type="AudioStream" uid="uid://jhxwdp6hjr72" path="res://sounds/Elevation.mp3" id="6_bgm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg5yo"]
 bg_color = Color(0.7771888, 1.6828436, 1.5820898, 1)
@@ -59,6 +60,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e6vgv")
 
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bgm")
+autoplay = true
+
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 1154.0
@@ -100,8 +105,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_yft84")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_e6vgv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pn7wg")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_e6vgv")
-text = "  Options
-"
+text = "  Options"
 alignment = 0
 
 [node name="Button3" type="Button" parent="VBoxContainer"]
@@ -115,7 +119,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_yft84")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_e6vgv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pn7wg")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_e6vgv")
-text = "  Credits"
+text = "  Story"
 alignment = 0
 
 [node name="Button4" type="Button" parent="VBoxContainer"]
@@ -168,3 +172,5 @@ theme_override_font_sizes/font_size = 24
 text = "HACK CLUB CAMPFIRE."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_story_pressed"]

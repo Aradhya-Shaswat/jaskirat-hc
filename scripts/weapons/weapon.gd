@@ -11,11 +11,9 @@ var current_power: float
 func _ready() -> void:
     current_power = max_power
 
-# Expected to be overridden
 func fire(_delta: float) -> void:
     pass
 
-# Expected to be overridden
 func stop_fire() -> void:
     pass
 

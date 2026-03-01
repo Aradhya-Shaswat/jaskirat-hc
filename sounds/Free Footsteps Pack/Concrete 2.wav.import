@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c1qlbgqin2peu"
+path="res://.godot/imported/Concrete 2.wav-827772379a55b30b8a153f9345ea3e25.sample"
+
+[deps]
+
+source_file="res://sounds/Free Footsteps Pack/Concrete 2.wav"
+dest_files=["res://.godot/imported/Concrete 2.wav-827772379a55b30b8a153f9345ea3e25.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
